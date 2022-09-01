@@ -1,0 +1,80 @@
+
+<h1 class="text-center"><u>Employee List</u></h1>
+
+<div class="container position-relative">
+    <div class="container">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+            <div class="form-group">
+                <label for="change" ></label>
+                <div>
+                  <input id="all"
+                            type="radio"
+                            value="all"
+                            name="change"
+                            formControlName="change"
+                            [(ngModel)]="radioSelected"
+                            (change)="changeEvent($event)"
+                             checked>
+                  <label for="all">All({{activeCount+inActiveCount}})</label>
+               </div>
+               <div>
+                  <input id="active"
+                            type="radio"
+                            value="active"
+                            name="change"
+                            formControlName="change"
+                            (change)="changeEvent($event)"
+                            >  
+                  <label for="active">Active({{activeCount}})</label>
+               </div>
+               <div>
+                <input id="Inactive"
+                          type="radio"
+                          value="Inactive"
+                          name="change"
+                          formControlName="change"
+                          (change)="changeEvent($event)">
+                <label for="Inactive">InActive({{inActiveCount}})</label>
+             </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="btn">
+        <button type="button" class=" mt-2 btn btn-primary mr-3 " (click)="openModalWithComponent()">Add New Item</button>
+        <button type="button" class=" mt-2 btn btn-danger" style="box-shadow:5px 10px #888888" (click)="onDelete()">Delete All</button><span>({{this.delCount}})</span>
+    </div>
+      
+        
+    <div class="mt-5">
+        <table class="table table-bordered table-striped" style="width:80%;" >
+            <thead> 
+                <tr>
+                    <th><input type="checkbox" class="checkbox" (click)="checkAll($event)">All</th>
+                    <th scope="col">Employee</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor = "let emp of empArr; let i = index" [class.active]="i == selectedRow"> 
+                <td> <input type="checkbox" [checked]="checkbox" (click)="toggleSelection($event, i)"></td>
+                 <td>{{emp.name}}</td>
+                 <td *ngIf="emp.status==1; else InActive">
+                    <button type="button" class="btn btn-success" style="background-color:green;border-radius: 20%;">Active</button>
+                </td>
+                 <ng-template #InActive  >
+                    <td><button type="button" class="btn btn-secondary" style="background-color:grey; border-radius: 20%;">InActive</button></td>
+                </ng-template>
+                 <td>{{emp.date | date}}</td>
+                 <td><button class="btn btn-danger" (click)="delete(emp.name,emp.status)">Delete</button></td>
+              </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+

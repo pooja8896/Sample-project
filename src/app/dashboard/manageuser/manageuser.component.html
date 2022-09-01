@@ -1,0 +1,22 @@
+<table class="table table-bordered table-striped mt-3">
+    <thead>
+        <tr>
+            <th scope="col">User Name</th>
+            <th scope="col"> User Email </th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead> 
+    <tbody>
+        <tr *ngFor = "let user of userList; let i = index">
+           <td>{{user.name}}</td> 
+           <td>{{user.email}}</td>
+           <td>
+            <button type="button" class="btn btn-primary" [routerLink]="['/dashboard/editUser',user.Id]">Edit</button>
+            <button type="button" (click)="onDelete(user.email,i)" class="btn btn-danger mx-3">
+                Delete
+            </button>
+           </td>
+        </tr>
+    </tbody>
+</table>
+<router-outlet></router-outlet>
